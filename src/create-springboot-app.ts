@@ -16,22 +16,32 @@ const createSpringbootApp = async (name: string) => {
   });
 
   const springBootVersion = await new Promise<string>(resolve => {
-    rl.question("What version of Spring Boot do you want to use? ", resolve);
+    rl.question("What version of Spring Boot do you want to use? -> ", resolve);
   });
 
-  const javaVersion = await new Promise<string>(resolve => {
-    rl.question("What version of Java do you want to use? ", resolve);
-  });
+  const getJavaVersion = async () => {
+    const javaVersions = ["20", "17", "11", "8"];
+    while (true) {
+      const answer = await new Promise<string>(resolve => {
+        rl.question(`What version of Java do you want to use? Choose from [${javaVersions.join(", ")}] -> `, resolve);
+      });
+      if (javaVersions.includes(answer)) {
+        return answer;
+      } else {
+        console.log(`${answer} is invalid input. Please choose from [${javaVersions.join(", ")}].`);
+      }
+    }  
+  }
+  const javaVersion = await getJavaVersion();
 
   rl.close();
 
   const buildGradlePath = path.join(newProjectDir, 'build.gradle');
-  let buildGradleContent = await fs.readFile(buildGradlePath, 'utf8');
+  const buildGradleContent = await fs.readFile(buildGradlePath, 'utf8');
+  const replacedContent = buildGradleContent.replace("springBootVersion", springBootVersion)
+                                            .replace("javaVersion", javaVersion);
 
-  buildGradleContent = buildGradleContent.replace(/id 'org.springframework.boot' version '\d+\.\d+\.\d+'/, `id 'org.springframework.boot' version '${springBootVersion}'`);
-  buildGradleContent = buildGradleContent.replace(/sourceCompatibility = '\d+'/g, `sourceCompatibility = '${javaVersion}'`);
-
-  await fs.writeFile(buildGradlePath, buildGradleContent);
+  await fs.writeFile(buildGradlePath, replacedContent);
 };
 
 const projectName = process.argv[2];
