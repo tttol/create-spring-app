@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as process from 'process';
 import * as readline from 'readline';
 
-const createSpringbootApp = async (name: string) => {
+const createSpringApp = async (name: string) => {
   const templateDir = "./template";
   const newProjectDir = path.join(process.cwd(), name);
 
@@ -47,11 +47,11 @@ const createSpringbootApp = async (name: string) => {
 const projectName = process.argv[2];
 if (!projectName) {
   console.error("You must set project name at arg.")
-  console.error("Usage `create-springboot-app <project name>`")
+  console.error("Usage `create-spring-app <project name>`")
   process.exit(1)
 }
 
-createSpringbootApp(projectName).catch(error => {
+createSpringApp(projectName).catch(error => {
   console.error(error);
   process.exit(1);
 });
