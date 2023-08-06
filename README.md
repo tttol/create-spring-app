@@ -5,5 +5,5 @@ SpringBootアプリの雛形作成コマンド
 ```
 npm install
 npm run build
-node dist/create-spring-app.js <project name>
+node dist/index.js <project name>
 ```

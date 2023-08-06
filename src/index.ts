@@ -27,9 +27,9 @@ const createSpringApp = async (name: string) => {
       });
       if (javaVersions.includes(answer)) {
         return answer;
-      } else {
-        console.log(`${answer} is invalid input. Please choose from [${javaVersions.join(", ")}].`);
-      }
+      } 
+
+      console.log(`${answer} is invalid input. Please choose from [${javaVersions.join(", ")}].`);
     }  
   }
   const javaVersion = await getJavaVersion();

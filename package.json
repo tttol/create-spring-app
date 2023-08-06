@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
-  },
+    "prebuild": "rm -rf dist && mkdir dist",
+    "build": "tsc && echo '#!/usr/bin/env node' | cat - dist/index.js > temp && mv temp dist/index.js",
+    "postbuild": "cp -r template dist/template"
+  },  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tttol/create-spring-app.git"
