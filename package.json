@@ -9,7 +9,7 @@
   "scripts": {
     "prebuild": "rm -rf dist && mkdir dist",
     "build": "tsc && echo '#!/usr/bin/env node' | cat - dist/index.js > temp && mv temp dist/index.js",
-    "postbuild": "cp -r template dist/template"
+    "postbuild": "cp -r template dist/template/gradle-groovy"
   },
   "repository": {
     "type": "git",
